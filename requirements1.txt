@@ -1,0 +1,61 @@
+# =============================
+# Core web server dependencies
+# =============================
+
+# Lightweight HTTP server (REST API)
+Flask==3.0.2
+
+# For WebSocket support (real-time push)
+websockets==12.0
+flask-socketio==5.3.6
+
+# =============================
+# Client-side HTTP/WebSocket
+# =============================
+
+# HTTP requests
+requests==2.32.2
+
+# WebSocket client for real-time push
+websocket-client==1.8.0
+
+# =============================
+# Data handling & logging
+# =============================
+
+# For CSV and DataFrame-like operations
+pandas>=2.0.3
+
+# Numerical operations (mean, stdev for jitter)
+numpy>=1.23
+
+# =============================
+# Plotting & analysis
+# =============================
+
+# Jupyter notebooks
+notebook==7.2.0
+
+# Plotting library
+matplotlib==3.7.5
+
+# =============================
+# Testing tools
+# =============================
+
+# For test scripts
+pytest==8.2.1
+
+# =============================
+# Optional: Type hints, linting
+# =============================
+
+# Type checker
+mypy==1.10.0
+
+# =============================
+# Notes
+# =============================
+
+# ⚡ REMOVED Windows-only pywin32 for Ubuntu/Linux compatibility.
+# ⚡ Compatible with Python 3.11+. Always install inside your venv.

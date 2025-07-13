@@ -1,0 +1,9 @@
+#.gitignore
+
+venv/
+__pycache__/
+*.pyc
+.vscode/
+results/
+.DS_Store
+Thumbs.db

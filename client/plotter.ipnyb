@@ -1,0 +1,13 @@
+# plotter.ipynb (sample cells)
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('../results/metrics.csv')
+
+plt.figure(figsize=(10, 5))
+plt.plot(df['timestamp'], df['latency_ms'])
+plt.title('Latency over Time')
+plt.xlabel('Time')
+plt.ylabel('Latency (ms)')
+plt.xticks(rotation=45)
+plt.show()
