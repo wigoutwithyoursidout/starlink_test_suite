@@ -3,7 +3,11 @@
 import argparse
 from client.test_latency import run_latency_test
 from client.test_throughput import run_throughput_test
-from client.traffic_generator import run_traffic_generator
+from client.traffic_generator_ import run_traffic_generator
+
+    # python runner.py --test latency --server 10.0.2.15 --duration 30
+    # python runner.py --test throughput --server 10.0.2.15
+    # python runner.py --test traffic --server http://10.0.2.15:8000 --duration 30
 
 def main():
     parser = argparse.ArgumentParser(description="Starlink Test Suite Runner")

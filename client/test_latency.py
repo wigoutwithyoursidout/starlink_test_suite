@@ -1,33 +1,35 @@
 # client/test_latency.py
-import subprocess
-import re
+import requests
+import time
 from logger import Logger
 
-def run_ping(server_ip, count=10):
-    """Run a simple ping test"""
-    cmd = ["ping", "-c", str(count), server_ip]
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"Ping failed: {result.stderr}")
-        return None
-    return result.stdout
-
-def parse_and_log_ping_output(ping_output, logger):
-    """
-    Extracts and logs latency for each individual ping.
-    Example line: 64 bytes from 8.8.8.8: icmp_seq=1 ttl=118 time=14.2 ms
-    """
-    for line in ping_output.splitlines():
-        match = re.search(r'time=([\d\.]+) ms', line)
-        if match:
-            latency_ms = float(match.group(1))
-            logger.log("latency_ms", latency_ms)
-
-def run_latency_test(server_ip, count=10):
+def run_http_ping(server_url, count=10):
+    """Send HTTP GET requests to the /ping endpoint and measure latency."""
     logger = Logger()
-    ping_output = run_ping(server_ip, count)
-    if ping_output:
-        parse_and_log_ping_output(ping_output, logger)
+    
+    for i in range(count):
+        try:
+            start_time = time.time()
+            response = requests.get(f"{server_url}", timeout=5)
+            end_time = time.time()
+
+            if response.status_code == 200:
+                round_trip_ms = (end_time - start_time) * 1000
+                data = response.json()
+                server_timestamp = data.get('server_timestamp')
+
+                print(f"Ping {i+1}: {round_trip_ms:.2f} ms | server_timestamp: {server_timestamp}")
+                logger.log("http_latency_ms", round_trip_ms)
+            else:
+                print(f"Ping {i+1}: HTTP {response.status_code}")
+
+        except requests.RequestException as e:
+            print(f"Ping {i+1}: Request failed - {e}")
+
+        # Add 5-second delay before the next request
+        if i < count - 1:
+            time.sleep(5)
 
 if __name__ == "__main__":
-    run_latency_test("YOUR_SERVER_IP", count=10)
+    # Example: http://127.0.0.1:8000 if running locally
+    run_http_ping("http://127.0.0.1:8000/ping", count=10)
