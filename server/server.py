@@ -1,6 +1,7 @@
 # server/server.py
 from flask import Flask, jsonify
-from datetime import datetime
+from datetime import datetime  # For timestamps
+from zoneinfo import ZoneInfo
 
 app = Flask(__name__)
 
@@ -8,7 +9,7 @@ app = Flask(__name__)
 def ping():
     return jsonify({
         'message': 'pong',
-        'server_timestamp': datetime.utcnow().isoformat() + 'Z'
+        'server_timestamp': datetime.now(ZoneInfo("Australia/Sydney")).isoformat(),
     })
 
 if __name__ == '__main__':
